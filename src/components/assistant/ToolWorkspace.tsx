@@ -118,7 +118,7 @@ export function ToolWorkspace({
                 />
               ) : field.kind === "select" ? (
                 <Select
-                  value={values[field.name]}
+                  value={values[field.name] ?? ""}
                   onValueChange={(val) => setValues((v) => ({ ...v, [field.name]: val }))}
                 >
                   <SelectTrigger id={field.name}>
