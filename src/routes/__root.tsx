@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppSidebar } from "../components/assistant/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { Toaster } from "../components/ui/sonner";
+import { ThemeProvider } from "../hooks/use-theme";
+import { ThemeToggle } from "../components/assistant/ThemeToggle";
 
 function NotFoundComponent() {
   return (
@@ -133,6 +135,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
       <SidebarProvider>
         <AppSidebar />
         <div className="flex min-h-screen w-full flex-col">
@@ -142,6 +145,9 @@ function RootComponent() {
             <span className="ml-auto hidden rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground sm:inline">
               AI-generated content — review before use
             </span>
+            <div className="ml-auto sm:ml-0">
+              <ThemeToggle />
+            </div>
           </header>
           <main className="flex-1 p-4 sm:p-6">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
@@ -154,6 +160,7 @@ function RootComponent() {
         </div>
       </SidebarProvider>
       <Toaster />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
