@@ -1,19 +1,9 @@
-import { Check, Moon, Palette, Sun } from "lucide-react";
+import { Palette, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useTheme } from "@/hooks/use-theme";
-import { cn } from "@/lib/utils";
 
-type Option = { id: "light" | "dark"; label: string; hint: string; icon: typeof Sun };
-
-const options: Option[] = [
-  { id: "light", label: "Light lavender", hint: "White surfaces, lavender accents", icon: Sun },
-  { id: "dark", label: "Dark lavender", hint: "Deep lavender surfaces, soft glow", icon: Moon },
-];
-
-function MiniPreview({ scheme }: { scheme: "light" | "dark" }) {
+function MiniPreview() {
   return (
-    <div className={cn(scheme === "dark" && "dark", "overflow-hidden rounded-lg border border-border")}>
+    <div className="overflow-hidden rounded-lg border border-border">
       <div className="bg-hero px-2.5 py-3">
         <div className="h-1.5 w-14 rounded-full bg-primary-foreground/80" />
         <div className="mt-1.5 h-1 w-20 rounded-full bg-primary-foreground/45" />
@@ -38,45 +28,25 @@ function MiniPreview({ scheme }: { scheme: "light" | "dark" }) {
 }
 
 export function ThemePreview() {
-  const { theme, setTheme } = useTheme();
-
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Preview and choose theme">
-          <Palette className="size-4" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-72">
+    <div className="group relative inline-flex items-center">
+      <Button variant="ghost" size="icon" aria-label="Theme preview" title="Theme preview">
+        <Palette className="size-4" />
+      </Button>
+      <div className="pointer-events-none absolute right-0 top-full z-50 mt-2 w-64 origin-top-right scale-95 rounded-xl border border-border bg-popover p-3 opacity-0 shadow-panel transition-all duration-200 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:scale-100 group-focus-within:opacity-100">
         <p className="font-display text-sm font-semibold">Theme preview</p>
-        <p className="mt-0.5 text-xs text-muted-foreground">
-          See each lavender style, then pick the one you want.
-        </p>
-        <div className="mt-3 space-y-3">
-          {options.map((option) => {
-            const active = theme === option.id;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => setTheme(option.id)}
-                className={cn(
-                  "w-full rounded-xl border p-2 text-left transition-colors",
-                  active ? "border-primary bg-primary/5" : "border-border hover:border-primary/50",
-                )}
-              >
-                <MiniPreview scheme={option.id} />
-                <span className="mt-2 flex items-center gap-1.5 text-xs font-medium">
-                  <option.icon className="size-3.5 text-primary" />
-                  {option.label}
-                  {active && <Check className="ml-auto size-3.5 text-primary" />}
-                </span>
-                <span className="mt-0.5 block text-[11px] text-muted-foreground">{option.hint}</span>
-              </button>
-            );
-          })}
+        <p className="mt-0.5 text-xs text-muted-foreground">Nexa is set to light lavender.</p>
+        <div className="mt-3 rounded-xl border border-primary bg-primary/5 p-2">
+          <MiniPreview />
+          <span className="mt-2 flex items-center gap-1.5 text-xs font-medium">
+            <Check className="size-3.5 text-primary" />
+            Light lavender
+          </span>
+          <span className="mt-0.5 block text-[11px] text-muted-foreground">
+            White surfaces, lavender accents.
+          </span>
         </div>
-      </PopoverContent>
-    </Popover>
+      </div>
+    </div>
   );
 }
