@@ -16,6 +16,7 @@ import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { Toaster } from "../components/ui/sonner";
 import { ThemeProvider } from "../hooks/use-theme";
 import { ThemeToggle } from "../components/assistant/ThemeToggle";
+import { ThemePreview } from "../components/assistant/ThemePreview";
 
 function NotFoundComponent() {
   return (
@@ -145,7 +146,8 @@ function RootComponent() {
             <span className="ml-auto hidden rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground sm:inline">
               AI-generated content — review before use
             </span>
-            <div className="ml-auto sm:ml-0">
+            <div className="ml-auto flex items-center gap-0.5 sm:ml-0">
+              <ThemePreview />
               <ThemeToggle />
             </div>
           </header>
